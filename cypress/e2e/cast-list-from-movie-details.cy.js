@@ -1,7 +1,8 @@
 let movies; // List of movies from TMDB
 let movie; //
+let cast;
 
-describe("Base tests", () => {
+describe("Get cast", () => {
   before(() => {
     // Get the discover movies from TMDB and store them locally.
     cy.request(
@@ -30,7 +31,11 @@ describe("Base tests", () => {
       });
     });
   });
-  describe("The movie details page", () => {
+  describe("The movie details page",
+    {
+      viewportHeight: 1080,
+      viewportWidth: 1920,
+    }, () => {
     before(() => {
       cy.request(
         `https://api.themoviedb.org/3/movie/${
@@ -41,23 +46,22 @@ describe("Base tests", () => {
         .then((movieDetails) => {
           movie = movieDetails;
         });
+      cy.request(
+        `https://api.themoviedb.org/3/movie/${movies[1].id}/credits?api_key=${Cypress.env("TMDB_KEY")}`
+      ).its("body")
+      .then((response) => {
+        cast = response.cast;
+      });
     });
     beforeEach(() => {
       cy.visit(`/movies/${movies[1].id}`);
     });
-    it(" displays the movie title, overview and genres and ", () => {
+    it(" displays the movie title, and correct cast list ", () => {
       cy.get("h3").contains(movie.title);
-      cy.get("h3").contains("Overview");
-      cy.get("h3").eq(1).next().contains(movie.overview);
-      cy.get("ul")
-        .eq(1)
-        .within(() => {
-          const genreChipLabels = movie.genres.map((g) => g.name);
-          genreChipLabels.unshift("Genres");
-          cy.get("span").each(($card, index) => {
-            cy.wrap($card).contains(genreChipLabels[index]);
-          });
-        });
+      cy.get("h3").eq(2).contains("Cast");
+      cy.get(".MuiGrid-root").eq(3).find(".MuiCardHeader-content").each(($card, index) => {
+        cy.wrap($card).find("p").contains(cast[index].name);
+      });
     });
   });
 });
