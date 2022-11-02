@@ -8,7 +8,7 @@ export default {
   title: "Movie Details Page/MovieHeader",
   component: MovieHeader,
   decorators: [
-    (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
+    (Story) => <MemoryRouter initialEntries={["/login"]}>{Story()}</MemoryRouter>,
   ],
 };
 

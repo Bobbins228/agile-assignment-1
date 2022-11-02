@@ -53,15 +53,15 @@ describe("Get cast", () => {
         cast = response.cast;
       });
     });
-    beforeEach(() => {
-      cy.visit(`/movies/${movies[1].id}`);
-    });
     it(" displays the movie title, and correct cast list ", () => {
+      cy.visit(`/movies/${movies[1].id}`);
       cy.get("h3").contains(movie.title);
-      cy.get("h3").eq(2).contains("Cast");
-      cy.get(".MuiGrid-root").eq(3).find(".MuiCardHeader-content").each(($card, index) => {
-        cy.wrap($card).find("p").contains(cast[index].name);
+      cy.get("h3").eq(2).contains("Cast").then((c) => {
+        cy.get(".MuiGrid-root").eq(3).find(".MuiCardHeader-content").each(($card, index) => {
+          cy.wrap($card).find("p").contains(cast[index].name);
+        });
       });
+      
     });
   });
 });

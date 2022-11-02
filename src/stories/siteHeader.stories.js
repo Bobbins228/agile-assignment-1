@@ -6,7 +6,7 @@ export default {
   title: "App Header",
   component: SiteHeader,
   decorators: [
-    (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
+    (Story) => <MemoryRouter initialEntries={["/login"]}>{Story()}</MemoryRouter>,
   ],
 };
 
