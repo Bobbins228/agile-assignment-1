@@ -37,7 +37,7 @@ describe("User funcitonality", () => {
             cy.get(".login__textBox[type='password']").type(`${Cypress.env("PASSWORD")}`);
             cy.get(".login__btn").eq(0).click();
             cy.url().should("include", `/movies/home`);
-            cy.log("Add two buttons to the favourites list");
+            cy.log("Add two movies to the favourites list");
             cy.get("button[aria-label='add to favorites']").eq(0).click();
             cy.get(".MuiCardHeader-root").eq(0).find("svg");
             cy.get("button[aria-label='add to favorites']").eq(1).click();
