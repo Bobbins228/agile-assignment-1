@@ -32,11 +32,11 @@ const SiteHeader = ({ history }) => {
     { label: "Actors", path: "/people" },
     { label: "Trending Movies", path: "/movies/trending"},
     { label: "Trending Actors", path: "/people/trending"},
-    { label: "Log out", path: "/" },
+    { label: "Log out", path: "/login" },
   ];
 
   const handleMenuSelect = (pageURL) => {
-    if (pageURL === "/"){
+    if (pageURL === "/login"){
       logout()
     }
     navigate(pageURL, { replace: true });

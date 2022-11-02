@@ -31,7 +31,7 @@ const FavoriteMoviesPage = () => {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) return navigate("/");
+    if (!user) return navigate("/login");
     fetchUserName();
   }, [user, loading]);
   // Create an array of queries and run in parallel.
