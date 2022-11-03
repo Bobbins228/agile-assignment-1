@@ -1,3 +1,4 @@
+import { filterByName } from "../support/e2e";
 let actors;
 let popularActor;
 let creditedMovies;
@@ -100,6 +101,25 @@ describe("Actors lists tests", () =>{
               cy.wrap($card).find("p").contains(trendingActors[index].name);
             });
           });
+          describe("Searching for actors by name", ()=> {
+            it("only display trending actors with 'c' in their name", () => {
+                const searchString = "c";
+                const matchingActors = filterByName(trendingActors, searchString);
+                cy.get("#filled-search").clear().type(searchString); // Enter m in text box
+                cy.get(".MuiCardHeader-content").should(
+                  "have.length",
+                  matchingActors.length
+                );
+                cy.get(".MuiCardHeader-content").each(($card, index) => {
+                  cy.wrap($card).find("p").contains(matchingActors[index].name);
+                });
+              });
+              it("handles case when there are no matches", () => {
+                const searchString = "xyxxzyyzz";
+                cy.get("#filled-search").clear().type(searchString); // Enter m in text box
+                cy.get(".MuiCardHeader-content").should("have.length", 0);
+              });
+          })
           describe("Trending Actor Details", () =>{
             beforeEach(()=>{
                 cy.visit(`/people/${trendingActors[1].id}`);
