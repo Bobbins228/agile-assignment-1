@@ -105,7 +105,6 @@ describe("Get Reviews", () => {
 
     it("Should navigate back to the login page when the Log out button is clicked", () => {
         cy.get("button").contains("Log").click();
-        cy.get("button").contains("Log").click();
         cy.url().should("include", `/login`);
     });
     
