@@ -60,7 +60,7 @@ describe("Get Reviews", () => {
             movie = movieDetails;
         });
         cy.request(
-            `https://api.themoviedb.org/3/movie/${movies[1].id}/reviews?api_key=${Cypress.env("TMDB_KEY")}`
+            `https://api.themoviedb.org/3/movie/${movies[0].id}/reviews?api_key=${Cypress.env("TMDB_KEY")}`
             )
             .its("body")
             .then((response) => {
@@ -69,7 +69,7 @@ describe("Get Reviews", () => {
         
       });
     it("Display the reviews for a movie", () => {
-        cy.visit(`/movies/${movies[1].id}`)
+        cy.visit(`/movies/${movies[0].id}`)
         cy.log("Clicking the reviews button shows off the reviews in the drawer")
         cy.get(".MuiFab-root").contains("Reviews").click()
         cy.get(".MuiTableCell-root").contains(`${reviews[0].author_details.name}`)
