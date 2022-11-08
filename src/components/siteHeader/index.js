@@ -38,6 +38,9 @@ const SiteHeader = ({ history }) => {
   const handleMenuSelect = (pageURL) => {
     if (pageURL === "/login"){
       logout()
+        .then(() => {
+          navigate("/login", {replace: true});
+        });
     }
     navigate(pageURL, { replace: true });
   };
