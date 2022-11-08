@@ -32,7 +32,7 @@ describe("Actors lists tests", () =>{
             //Get list of a popular actor's credited movies
             cy.request(
                 `https://api.themoviedb.org/3/person/${
-                  actors[1].id
+                  actors[0].id
                 }/movie_credits?api_key=${Cypress.env("TMDB_KEY")}`
               )
                 .its("body")
@@ -42,7 +42,7 @@ describe("Actors lists tests", () =>{
             //Get popular actor details
             cy.request(
                 `https://api.themoviedb.org/3/person/${
-                    actors[1].id
+                    actors[0].id
                 }?api_key=${Cypress.env("TMDB_KEY")}`
                 )
                 .its("body")
@@ -63,16 +63,14 @@ describe("Actors lists tests", () =>{
           });
         describe("Popular Actor Details", () =>{
             beforeEach(()=>{
-                cy.visit(`/people/${actors[1].id}`);
+                cy.visit(`/people/${actors[0].id}`);
             });
             it("Should display the movies that the actor has been in", () =>{
-                cy.visit(`/people/${actors[1].id}`);
                 cy.get(".MuiCardHeader-content").each(($card, index) => {
                     cy.wrap($card).find("p").contains(creditedMovies[index].title);
                   });
             });
             it("Should display the actor's biograpy", () =>{
-                cy.visit(`/people/${actors[1].id}`);
                 cy.get("p").eq(0).contains(popularActor.biography)
             });
         })

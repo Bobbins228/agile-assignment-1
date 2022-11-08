@@ -1,12 +1,9 @@
 describe("Logged out user tests ", () => {
-  beforeEach(() => {
-    cy.reload(true)
-  })
   
     describe("Favourites authentication", () => { 
       it("Should navigate to the log in page if a user who is not logged in favourites a movie", () => {
-            cy.visit("/login");
-            cy.get("button").contains("Home").click();
+            cy.visit("/movies/home");
+            cy.wait(300)
             cy.get("button[aria-label='add to favorites']").eq(1).click();
             cy.log('Clicked the add to favourites button which should send the user to the log in page');
             cy.url().should("include", "/login")

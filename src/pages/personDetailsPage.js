@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import PersonDetails from "../components/peopleDetails/";
 import PageTemplate from "../components/templatePersonPage";
 import { getPerson, getPeopleMovieCredits } from '../api/tmdb-api'
-import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
+import { useQuery, useIsFetching } from "react-query";
 
 const PersonDetailsPage = (props) => {
+  const isFetching = useIsFetching();
   const { id } = useParams();
-  const { data: person, error, isLoading, isError } = useQuery(
+  const { data: person, error, isError } = useQuery(
     ["person", { id: id }],
     getPerson
   );
@@ -17,7 +18,7 @@ const PersonDetailsPage = (props) => {
     ["person movie credits", { id: id }],
     getPeopleMovieCredits
   );
-  if (isLoading) {
+  if (isFetching) {
     return <Spinner />;
   }
 

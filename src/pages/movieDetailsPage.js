@@ -3,17 +3,18 @@ import { useParams } from 'react-router-dom';
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
 import { getMovie, getMovieCredits, getRecommendedMovies, getSimilarMovies } from '../api/tmdb-api'
-import { useQuery } from "react-query";
+import { useQuery, useIsFetching } from "react-query";
 import Spinner from '../components/spinner'
 
 const MoviePage = (props) => {
+  const isFetching = useIsFetching();
   const { id } = useParams();
-  const { data: movie, error, isLoading, isError } = useQuery(
+  const { data: movie } = useQuery(
     ["movie", { id: id }],
     getMovie
   );
 
-  const { data: similarMovies } = useQuery(
+  const { data: similarMovies} = useQuery(
     ["similar movies", { id: id }],
     getSimilarMovies
   );
@@ -28,13 +29,10 @@ const MoviePage = (props) => {
     getMovieCredits
   );
 
-  if (isLoading) {
+  if (isFetching) {
     return <Spinner />;
   }
 
-  if (isError) {
-    return <h1>{error.message}</h1>;
-  }
 
   return (
     <>
